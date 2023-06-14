@@ -7,8 +7,7 @@ import java.util.Scanner;
 public class Alimento {
     static Scanner scanner = new Scanner(System.in);
     static List<Alimento> alimentos = new ArrayList<>();
-    String nome;
-    String preco;
+    String caloria;
     Integer quantidade;
     public static void alimento() {
         boolean executando = true;
@@ -45,26 +44,7 @@ public class Alimento {
         }
     }
 
-    public static void criarAlimento() {
-        Alimento alimento = new Alimento();
 
-        System.out.println("=== Criar Alimento ===");
-        System.out.println("Qual é o nome do alimento?");
-        String nome = scanner.nextLine();
-        alimento.setNome(nome);
-
-        System.out.println("Qual é o preço do alimento?");
-        String preco = scanner.nextLine();
-        alimento.setPreco(preco);
-
-        System.out.println("Qual é a quantidade do alimento?");
-        int quantidade = scanner.nextInt();
-        alimento.setQuantidade(quantidade);
-
-        alimentos.add(alimento);
-        System.out.println("Alimento criado com sucesso!");
-        System.out.println();
-    }
 
     public static void listarAlimentos() {
         if (alimentos.isEmpty()) {
@@ -143,17 +123,7 @@ public class Alimento {
         }
         System.out.println();
     }
-    public String getPreco() {;
-        return preco;
-    }
 
-    public void setPreco(String preco) {
-        this.preco = preco;
-    }
-
-    public String getNome() {
-        return nome;
-    }
 
     public void setNome(String nome) {
         this.nome = nome;

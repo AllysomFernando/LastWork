@@ -1,4 +1,7 @@
 package fag.lastWork.produto;
 
-public class Produto {
+import fag.lastWork.produtoBase.ProdutoBase;
+
+public class Produto extends ProdutoBase {
+
 }
