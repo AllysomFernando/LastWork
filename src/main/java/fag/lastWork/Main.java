@@ -1,7 +1,9 @@
 package fag.lastWork;
 
+import fag.lastWork.alimento.Alimento;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Alimento.alimento();
     }
 }
