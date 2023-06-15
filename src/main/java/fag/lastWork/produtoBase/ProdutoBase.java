@@ -30,8 +30,27 @@ public abstract class ProdutoBase<T> {
         System.out.println();
     }
 
+    public void updateProduto() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== Atualizar Produto ===");
+        System.out.println("Qual é o novo nome do Produto?");
+        nome = scanner.nextLine();
+
+        System.out.println("Qual é o novo preço do Produto?");
+        preco = scanner.nextLine();
+
+        System.out.println("Qual é a nova quantidade do Produto?");
+        quantidade = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Produto atualizado com sucesso!");
+        System.out.println();
+    }
+
+
     protected abstract T criarInstanciaProduto(String nome, String preco, int quantidade);
-    public String getNome() {
+    public static String getNome() {
         return nome;
     }
 
