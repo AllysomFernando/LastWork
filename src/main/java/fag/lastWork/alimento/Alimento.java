@@ -1,12 +1,20 @@
 package fag.lastWork.alimento;
 
 import fag.lastWork.produtoBase.ProdutoBase;
+import fag.lastWork.vendavel.Vendavel;
 
 import java.util.Scanner;
 
-public class Alimento extends ProdutoBase<Alimento> {
+public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
     private static String caloria;
+    private boolean isVendavel;
 
+    public boolean isVendavel() {
+        return isVendavel;
+    }
+    public void setVendavel(boolean vendavel) {
+        isVendavel = vendavel;
+    }
     public static void exibirMenu() {
         Scanner scanner = new Scanner(System.in);
         boolean sair = false;
@@ -31,6 +39,16 @@ public class Alimento extends ProdutoBase<Alimento> {
         Scanner scanner = new Scanner(System.in);
         alimento.criarProduto();
         System.out.println("Qual é a caloria do Alimento?");
+        System.out.println("O alimento é vendivel? 1 - Sim, 2 - Não");
+        int isVend = scanner.nextInt();
+        if(isVend == 1){
+            alimento.setVendavel(true);
+        }else if(isVend == 2){
+            alimento.setVendavel(false);
+        }else {
+            System.out.println("Opção inválida. O alimento será considerado não vendável.");
+            alimento.setVendavel(false);
+        }
         System.out.println("Alimento criado com sucesso");
         String caloria = scanner.nextLine();
     }
