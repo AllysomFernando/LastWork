@@ -27,8 +27,6 @@ public abstract class ProdutoBase<T> {
         scanner.nextLine();
 
         T produto = criarInstanciaProduto(nome, preco, quantidade);
-
-        System.out.println("Produto criado com sucesso!");
         System.out.println();
     }
 

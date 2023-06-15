@@ -28,17 +28,27 @@ public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
             int opcao = scanner.nextInt();
 
             switch (opcao) {
-                case 1 -> criarAlimentoPersonalizado();
+                case 1 -> {
+                    Alimento alimento = criarAlimentoPersonalizado();
+                    System.out.println("Alimento criado:");
+                    System.out.println("Nome: " + alimento.getNome());
+                    System.out.println("Preço: " + alimento.getPreco());
+                    System.out.println("Quantidade: " + alimento.getQuantidade());
+                    System.out.println("Caloria: " + alimento.getCaloria());
+                    System.out.println("Vendável: " + (alimento.isVendavel() ? "Sim" : "Não"));
+                }
                 case 2 -> sair = true;
                 default -> System.out.println("Opção inválida. Por favor, escolha novamente.");
             }
         }
     }
-    private static void criarAlimentoPersonalizado() {
+    private static Alimento criarAlimentoPersonalizado() {
         Alimento alimento = new Alimento(nome, preco, quantidade, caloria);
         Scanner scanner = new Scanner(System.in);
         alimento.criarProduto();
         System.out.println("Qual é a caloria do Alimento?");
+        String caloria = scanner.nextLine();
+        alimento.setCaloria(caloria);
         System.out.println("O alimento é vendivel? 1 - Sim, 2 - Não");
         int isVend = scanner.nextInt();
         if(isVend == 1){
@@ -50,8 +60,9 @@ public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
             alimento.setVendavel(false);
         }
         System.out.println("Alimento criado com sucesso");
-        String caloria = scanner.nextLine();
+        return alimento;
     }
+
 
     public Alimento(String nome, String preco, int quantidade, String caloria) {
         super(nome, preco, quantidade);
