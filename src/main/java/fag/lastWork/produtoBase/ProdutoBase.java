@@ -1,35 +1,33 @@
 package fag.lastWork.produtoBase;
 
+
+import fag.lastWork.vendavel.Vendavel;
+
 import java.util.Scanner;
 
-public abstract class ProdutoBase<T> {
+public abstract class ProdutoBase<T> implements Vendavel {
     public String nome;
     public String preco;
     public int quantidade;
 
-    public ProdutoBase(String nome, String preco, int quantidade) {
+    private boolean isVendavel;
+
+
+    public boolean isVendavel() {
+        return isVendavel;
+    }
+
+    public void setVendavel(boolean vendavel) {
+        isVendavel = vendavel;
+    }
+
+    public ProdutoBase(String nome, String preco, int quantidade, Boolean isVendavel) {
         this.nome = nome;
         this.preco = preco;
         this.quantidade = quantidade;
+        this.isVendavel = isVendavel;
     }
 
-    public void criarProduto() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("=== Criar Produto ===");
-        System.out.println("Qual é o nome?");
-        nome = scanner.nextLine();
-
-        System.out.println("Qual é o preço?");
-        preco = scanner.nextLine();
-
-        System.out.println("Qual é a quantidade?");
-        quantidade = scanner.nextInt();
-        scanner.nextLine();
-
-        T produto = criarInstanciaProduto(nome, preco, quantidade);
-        System.out.println();
-    }
 
     public void updateProduto() {
         Scanner scanner = new Scanner(System.in);
@@ -49,7 +47,7 @@ public abstract class ProdutoBase<T> {
         System.out.println();
     }
 
-    protected abstract T criarInstanciaProduto(String nome, String preco, int quantidade);
+    protected abstract T criarInstanciaProduto(String nome, String preco, int quantidade, Boolean isVendavel);
 
     public String getNome() {
         return nome;

@@ -1,25 +1,14 @@
 package fag.lastWork.alimento;
 
 import fag.lastWork.produtoBase.ProdutoBase;
-import fag.lastWork.vendavel.Vendavel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
+public class Alimento extends ProdutoBase<Alimento>  {
     private String caloria;
-    private boolean isVendavel;
-     static List<Alimento> alimentos = new ArrayList<>();
-
-    public boolean isVendavel() {
-        return isVendavel;
-    }
-
-    public void setVendavel(boolean vendavel) {
-        isVendavel = vendavel;
-    }
-
+    static List<Alimento> alimentos = new ArrayList<>();
     public static void exibirMenu() {
         Scanner scanner = new Scanner(System.in);
         boolean sair = false;
@@ -36,10 +25,8 @@ public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
             scanner.nextLine();
 
             switch (opcao) {
-                case 1:
-                    criarAlimentoPersonalizado();
-                    break;
-                case 2:
+                case 1 -> criarAlimentoPersonalizado();
+                case 2 -> {
                     System.out.println("Digite o nome do alimento a ser atualizado:");
                     String nome = scanner.nextLine();
                     Alimento alimento = encontrarAlimentoPorNome(nome);
@@ -48,16 +35,10 @@ public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
                     } else {
                         System.out.println("Alimento não encontrado.");
                     }
-                    break;
-                case 3:
-                    listarAlimentos();
-                    break;
-                case 4:
-                    sair = true;
-                    break;
-                default:
-                    System.out.println("Opção inválida. Por favor, escolha novamente.");
-                    break;
+                }
+                case 3 -> listarAlimentos();
+                case 4 -> sair = true;
+                default -> System.out.println("Opção inválida. Por favor, escolha novamente.");
             }
         }
     }
@@ -121,13 +102,13 @@ public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
     }
 
     public Alimento(String nome, String preco, int quantidade, String caloria, boolean isVendavel) {
-        super(nome, preco, quantidade);
+        super(nome, preco, quantidade, isVendavel);
         this.caloria = caloria;
-        this.isVendavel = isVendavel;
+        this.setVendavel(isVendavel);
     }
 
     @Override
-    protected Alimento criarInstanciaProduto(String nome, String preco, int quantidade) {
+    protected Alimento criarInstanciaProduto(String nome, String preco, int quantidade, Boolean isVendavel) {
         return new Alimento(nome, preco, quantidade, caloria, isVendavel);
     }
 
