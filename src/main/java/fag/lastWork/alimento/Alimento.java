@@ -3,11 +3,14 @@ package fag.lastWork.alimento;
 import fag.lastWork.produtoBase.ProdutoBase;
 import fag.lastWork.vendavel.Vendavel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
     private String caloria;
     private boolean isVendavel;
+    private static List<Alimento> alimentos = new ArrayList<>();
 
     public boolean isVendavel() {
         return isVendavel;
@@ -21,57 +24,65 @@ public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
         Scanner scanner = new Scanner(System.in);
         boolean sair = false;
 
-        Alimento alimento = null;
-
         while (!sair) {
             System.out.println("=== Menu ===");
             System.out.println("1. Criar Alimento");
             System.out.println("2. Atualizar Alimento");
-            System.out.println("3. Sair");
+            System.out.println("3. Listar Alimentos");
+            System.out.println("4. Sair");
             System.out.println("Escolha uma opção:");
 
             int opcao = scanner.nextInt();
+            scanner.nextLine();
 
             switch (opcao) {
-                case 1 -> {
-                    alimento = criarAlimentoPersonalizado();
-                    System.out.println("Alimento criado:");
-                    System.out.println("Nome: " + alimento.getNome());
-                    System.out.println("Preço: " + alimento.getPreco());
-                    System.out.println("Quantidade: " + alimento.getQuantidade());
-                    System.out.println("Caloria: " + alimento.getCaloria());
-                    System.out.println("Vendável: " + (alimento.isVendavel() ? "Sim" : "Não"));
-                }
-                case 2 -> {
+                case 1:
+                    criarAlimentoPersonalizado();
+                    break;
+                case 2:
+                    System.out.println("Digite o nome do alimento a ser atualizado:");
+                    String nome = scanner.nextLine();
+                    Alimento alimento = encontrarAlimentoPorNome(nome);
                     if (alimento != null) {
-                        updateProduto(alimento);
+                        alimento.updateProduto();
                     } else {
-                        System.out.println("Nenhum alimento foi criado ainda.");
+                        System.out.println("Alimento não encontrado.");
                     }
-                }
-                case 3 -> sair = true;
-                default -> System.out.println("Opção inválida. Por favor, escolha novamente.");
+                    break;
+                case 3:
+                    listarAlimentos();
+                    break;
+                case 4:
+                    sair = true;
+                    break;
+                default:
+                    System.out.println("Opção inválida. Por favor, escolha novamente.");
+                    break;
             }
         }
     }
 
-    private static Alimento criarAlimentoPersonalizado() {
+    private static void criarAlimentoPersonalizado() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Qual é o nome do alimento?");
+
+        System.out.println("=== Criar Alimento ===");
+        System.out.println("Qual é o nome?");
         String nome = scanner.nextLine();
 
-        System.out.println("Qual é o preço do alimento?");
+        System.out.println("Qual é o preço?");
         String preco = scanner.nextLine();
 
-        System.out.println("Qual é a quantidade do alimento?");
+        System.out.println("Qual é a quantidade?");
         int quantidade = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Qual é a caloria do alimento?");
+        System.out.println("Qual é a caloria do Alimento?");
         String caloria = scanner.nextLine();
 
         System.out.println("O alimento é vendável? 1 - Sim, 2 - Não");
         int isVend = scanner.nextInt();
+        scanner.nextLine();
+
         boolean isVendavel;
         if (isVend == 1) {
             isVendavel = true;
@@ -82,46 +93,42 @@ public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
             isVendavel = false;
         }
 
-        Alimento alimento = new Alimento(nome, preco, quantidade, caloria);
-        alimento.setVendavel(isVendavel);
+        Alimento alimento = new Alimento(nome, preco, quantidade, caloria, isVendavel);
+        alimentos.add(alimento);
+
         System.out.println("Alimento criado com sucesso");
-        return alimento;
     }
 
-    public Alimento(String nome, String preco, int quantidade, String caloria) {
+    private static Alimento encontrarAlimentoPorNome(String nome) {
+        for (Alimento alimento : alimentos) {
+            if (alimento.getNome().equals(nome)) {
+                return alimento;
+            }
+        }
+        return null;
+    }
+
+    private static void listarAlimentos() {
+        System.out.println("=== Lista de Alimentos ===");
+        for (Alimento alimento : alimentos) {
+            System.out.println("Nome: " + alimento.getNome());
+            System.out.println("Preço: " + alimento.getPreco());
+            System.out.println("Quantidade: " + alimento.getQuantidade());
+            System.out.println("Caloria: " + alimento.getCaloria());
+            System.out.println("Vendável: " + (alimento.isVendavel() ? "Sim" : "Não"));
+            System.out.println();
+        }
+    }
+
+    public Alimento(String nome, String preco, int quantidade, String caloria, boolean isVendavel) {
         super(nome, preco, quantidade);
         this.caloria = caloria;
-    }
-
-    public static void updateProduto(Alimento alimento) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("=== Atualizar Alimento ===");
-
-        System.out.println("Qual é a nova caloria do Alimento?");
-        String caloria = scanner.nextLine();
-        alimento.setCaloria(caloria);
-
-        System.out.println("O Alimento é vendável? 1 - Sim, 2 - Não");
-        int isVend = scanner.nextInt();
-        boolean isVendavel;
-        if (isVend == 1) {
-            isVendavel = true;
-        } else if (isVend == 2) {
-            isVendavel = false;
-        } else {
-            System.out.println("Opção inválida. O Alimento será considerado não vendável.");
-            isVendavel = false;
-        }
-
-        alimento.setVendavel(isVendavel);
-        System.out.println("Alimento atualizado com sucesso!");
-        System.out.println();
+        this.isVendavel = isVendavel;
     }
 
     @Override
     protected Alimento criarInstanciaProduto(String nome, String preco, int quantidade) {
-        return new Alimento(nome, preco, quantidade, caloria);
+        return new Alimento(nome, preco, quantidade, caloria, isVendavel);
     }
 
     public String getCaloria() {

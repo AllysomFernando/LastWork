@@ -1,15 +1,16 @@
 package fag.lastWork.produtoBase;
+
 import java.util.Scanner;
 
 public abstract class ProdutoBase<T> {
-    public static String nome;
-    public static String preco;
-    public static int quantidade;
+    public String nome;
+    public String preco;
+    public int quantidade;
 
     public ProdutoBase(String nome, String preco, int quantidade) {
-        ProdutoBase.nome = nome;
-        ProdutoBase.preco = preco;
-        ProdutoBase.quantidade = quantidade;
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
     }
 
     public void criarProduto() {
@@ -17,13 +18,13 @@ public abstract class ProdutoBase<T> {
 
         System.out.println("=== Criar Produto ===");
         System.out.println("Qual é o nome?");
-        String nome = scanner.nextLine();
+        nome = scanner.nextLine();
 
         System.out.println("Qual é o preço?");
-        String preco = scanner.nextLine();
+        preco = scanner.nextLine();
 
         System.out.println("Qual é a quantidade?");
-        int quantidade = scanner.nextInt();
+        quantidade = scanner.nextInt();
         scanner.nextLine();
 
         T produto = criarInstanciaProduto(nome, preco, quantidade);
@@ -48,21 +49,22 @@ public abstract class ProdutoBase<T> {
         System.out.println();
     }
 
-
     protected abstract T criarInstanciaProduto(String nome, String preco, int quantidade);
-    public static String getNome() {
+
+    public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
-        ProdutoBase.nome = nome;
+        this.nome = nome;
     }
+
     public String getPreco() {
         return preco;
     }
 
     public void setPreco(String preco) {
-        ProdutoBase.preco = preco;
+        this.preco = preco;
     }
 
     public int getQuantidade() {
@@ -70,6 +72,6 @@ public abstract class ProdutoBase<T> {
     }
 
     public void setQuantidade(int quantidade) {
-        ProdutoBase.quantidade = quantidade;
+        this.quantidade = quantidade;
     }
 }
