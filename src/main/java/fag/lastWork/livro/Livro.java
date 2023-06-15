@@ -4,7 +4,7 @@ import fag.lastWork.produtoBase.ProdutoBase;
 
 import java.util.List;
 
-public class Livro extends ProdutoBase {
+public class Livro {
     private String autor;
 
     private List genero; //criado um enum importar dps

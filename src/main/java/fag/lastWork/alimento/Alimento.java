@@ -1,142 +1,57 @@
 package fag.lastWork.alimento;
 
-import java.util.ArrayList;
-import java.util.List;
+import fag.lastWork.produtoBase.ProdutoBase;
+
 import java.util.Scanner;
 
-public class Alimento {
-    static Scanner scanner = new Scanner(System.in);
-    static List<Alimento> alimentos = new ArrayList<>();
-    String caloria;
-    Integer quantidade;
-    public static void alimento() {
-        boolean executando = true;
-        while (executando) {
+public class Alimento extends ProdutoBase<Alimento> {
+    private static String caloria;
+
+    public static void exibirMenu() {
+        Scanner scanner = new Scanner(System.in);
+        boolean sair = false;
+
+        while (!sair) {
             System.out.println("=== Menu ===");
-            System.out.println("1. Criar alimento");
-            System.out.println("2. Listar alimentos");
-            System.out.println("3. Atualizar alimento");
-            System.out.println("4. Excluir alimento");
-            System.out.println("5. Sair");
-            System.out.print("Escolha uma opção: ");
+            System.out.println("1. Criar Alimento");
+            System.out.println("2. Sair");
+            System.out.println("Escolha uma opção:");
+
             int opcao = scanner.nextInt();
-            scanner.nextLine();
 
             switch (opcao) {
-                case 1:
-                    criarAlimento();
-                    break;
-                case 2:
-                    listarAlimentos();
-                    break;
-                case 3:
-                    atualizarAlimento();
-                    break;
-                case 4:
-                    excluirAlimento();
-                    break;
-                case 5:
-                    executando = false;
-                    break;
-                default:
-                    System.out.println("Opção inválida!");
+                case 1 -> criarAlimentoPersonalizado();
+                case 2 -> sair = true;
+                default -> System.out.println("Opção inválida. Por favor, escolha novamente.");
             }
         }
     }
-
-
-
-    public static void listarAlimentos() {
-        if (alimentos.isEmpty()) {
-            System.out.println("Não há alimentos cadastrados.");
-        } else {
-            System.out.println("=== Lista de Alimentos ===");
-            for (Alimento alimento : alimentos) {
-                System.out.println("Nome: " + alimento.getNome());
-                System.out.println("Preço: " + alimento.getPreco());
-                System.out.println("Quantidade: " + alimento.getQuantidade());
-                System.out.println("----------------------");
-            }
-        }
-        System.out.println();
+    private static void criarAlimentoPersonalizado() {
+        Alimento alimento = new Alimento(nome, preco, quantidade, caloria);
+        Scanner scanner = new Scanner(System.in);
+        alimento.criarProduto();
+        System.out.println("Qual é a caloria do Alimento?");
+        System.out.println("Alimento criado com sucesso");
+        String caloria = scanner.nextLine();
     }
 
-    public static void atualizarAlimento() {
-        if (alimentos.isEmpty()) {
-            System.out.println("Não há alimentos cadastrados.");
-        } else {
-            System.out.println("=== Atualizar Alimento ===");
-            System.out.print("Digite o nome do alimento que deseja atualizar: ");
-            String nome = scanner.nextLine();
-
-            Alimento alimentoEncontrado = null;
-            for (Alimento alimento : alimentos) {
-                if (alimento.getNome().equalsIgnoreCase(nome)) {
-                    alimentoEncontrado = alimento;
-                    break;
-                }
-            }
-
-            if (alimentoEncontrado != null) {
-                System.out.println("Qual é o novo nome do alimento?");
-                String novoNome = scanner.nextLine();
-                alimentoEncontrado.setNome(novoNome);
-
-                System.out.println("Qual é o novo preço do alimento?");
-                String novoPreco = scanner.nextLine();
-                alimentoEncontrado.setPreco(novoPreco);
-
-                System.out.println("Qual é a nova quantidade do alimento?");
-                int novaQuantidade = scanner.nextInt();
-                alimentoEncontrado.setQuantidade(novaQuantidade);
-
-                System.out.println("Alimento atualizado com sucesso!");
-            } else {
-                System.out.println("Alimento não encontrado.");
-            }
-        }
-        System.out.println();
+    public Alimento(String nome, String preco, int quantidade, String caloria) {
+        super(nome, preco, quantidade);
+        Alimento.caloria = caloria;
     }
 
-    public static void excluirAlimento() {
-        if (alimentos.isEmpty()) {
-            System.out.println("Não há alimentos cadastrados.");
-        } else {
-            System.out.println("=== Excluir Alimento ===");
-            System.out.print("Digite o nome do alimento que deseja excluir: ");
-            String nome = scanner.nextLine();
-
-            Alimento alimentoEncontrado = null;
-            for (Alimento alimento : alimentos) {
-                if (alimento.getNome().equalsIgnoreCase(nome)) {
-                    alimentoEncontrado = alimento;
-                    break;
-                }
-            }
-
-            if (alimentoEncontrado != null) {
-                alimentos.remove(alimentoEncontrado);
-                System.out.println("Alimento excluído com sucesso!");
-            } else {
-                System.out.println("Alimento não encontrado.");
-            }
-        }
-        System.out.println();
+    @Override
+    protected Alimento criarInstanciaProduto(String nome, String preco, int quantidade) {
+        return new Alimento(nome, preco, quantidade, caloria);
     }
 
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public String getCaloria() {
+        return caloria;
     }
 
-    public Integer getQuantidade() {
-        return quantidade;
+    public void setCaloria(String caloria) {
+        this.caloria = caloria;
     }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
-
 }
 
 
