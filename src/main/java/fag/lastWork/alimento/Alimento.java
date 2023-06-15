@@ -1,12 +1,13 @@
 package fag.lastWork.alimento;
 
+import fag.lastWork.desconto.CalculoDesconto;
 import fag.lastWork.produtoBase.ProdutoBase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Alimento extends ProdutoBase<Alimento>  {
+public class Alimento extends ProdutoBase<Alimento> implements CalculoDesconto{
     private String caloria;
     static List<Alimento> alimentos = new ArrayList<>();
     public static void exibirMenu() {
@@ -90,10 +91,16 @@ public class Alimento extends ProdutoBase<Alimento>  {
     }
 
     static void listarAlimentos() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("=== Lista de Alimentos ===");
         for (Alimento alimento : alimentos) {
             System.out.println("Nome: " + alimento.getNome());
             System.out.println("Preço: " + alimento.getPreco());
+            System.out.println("Digite a porcentagem de desconto para " + alimento.getNome() + ":");
+            double desconto = scanner.nextDouble();
+
+            double precoComDesconto = alimento.calcularPrecoComDesconto(Double.parseDouble(alimento.getPreco()), desconto);
+            System.out.println("Preço com Desconto: " + precoComDesconto);
             System.out.println("Quantidade: " + alimento.getQuantidade());
             System.out.println("Caloria: " + alimento.getCaloria());
             System.out.println("Vendável: " + (alimento.isVendavel() ? "Sim" : "Não"));
@@ -105,6 +112,10 @@ public class Alimento extends ProdutoBase<Alimento>  {
         super(nome, preco, quantidade, isVendavel);
         this.caloria = caloria;
         this.setVendavel(isVendavel);
+    }
+    public double calcularPrecoComDesconto(double preco, double desconto) {
+        double valorDesconto = preco * desconto / 100;
+        return preco - valorDesconto;
     }
 
     @Override

@@ -5,7 +5,7 @@ import fag.lastWork.vendavel.Vendavel;
 
 import java.util.Scanner;
 
-public abstract class ProdutoBase<T> implements Vendavel {
+public abstract class ProdutoBase<T> implements Vendavel  {
     public String nome;
     public String preco;
     public int quantidade;
