@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
     private String caloria;
     private boolean isVendavel;
-    private static List<Alimento> alimentos = new ArrayList<>();
+     static List<Alimento> alimentos = new ArrayList<>();
 
     public boolean isVendavel() {
         return isVendavel;
@@ -62,7 +62,7 @@ public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
         }
     }
 
-    private static void criarAlimentoPersonalizado() {
+        static void criarAlimentoPersonalizado() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("=== Criar Alimento ===");
@@ -99,7 +99,7 @@ public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
         System.out.println("Alimento criado com sucesso");
     }
 
-    private static Alimento encontrarAlimentoPorNome(String nome) {
+     static Alimento encontrarAlimentoPorNome(String nome) {
         for (Alimento alimento : alimentos) {
             if (alimento.getNome().equals(nome)) {
                 return alimento;
@@ -108,7 +108,7 @@ public class Alimento extends ProdutoBase<Alimento> implements Vendavel {
         return null;
     }
 
-    private static void listarAlimentos() {
+    static void listarAlimentos() {
         System.out.println("=== Lista de Alimentos ===");
         for (Alimento alimento : alimentos) {
             System.out.println("Nome: " + alimento.getNome());

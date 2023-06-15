@@ -14,6 +14,7 @@ public class Main {
         while (!sair) {
             System.out.println("=== Menu ===");
             System.out.println("1. Alimentos");
+            System.out.println("2. Eletrônico");
             System.out.println("2. Sair");
             System.out.println("Escolha uma opção:");
 
