@@ -112,8 +112,6 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
     }
 
     private static void listarProdutos() {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("=== Lista de Produtos ===");
         for (Produto produto : produtos) {
             System.out.println("Nome: " + produto.getNome());

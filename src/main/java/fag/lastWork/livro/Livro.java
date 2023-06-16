@@ -140,7 +140,6 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
     }
 
     private static void listarLivros() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("=== Lista de Livros ===");
         for (Livro livro : livros) {
             System.out.println("Nome: " + livro.getNome());
