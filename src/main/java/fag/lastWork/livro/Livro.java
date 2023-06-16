@@ -22,10 +22,14 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
         this.disponibilidade = disponibilidade;
     }
 
+    public Livro() {
+
+    }
+
     public static void exibirMenu() {
         Scanner scanner = new Scanner(System.in);
         boolean sair = false;
-
+        Livro livro = new Livro();
         while (!sair) {
             System.out.println("=== Menu ===");
             System.out.println("1. Criar Livro");
@@ -38,11 +42,14 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
             scanner.nextLine();
 
             switch (opcao) {
-                case 1 -> criarLivro();
+                case 1 -> {
+                    assert livro != null;
+                    livro.criarProdutoBase();
+                }
                 case 2 -> {
                     System.out.println("Digite o nome do livro a ser atualizado:");
                     String nome = scanner.nextLine();
-                    Livro livro = encontrarLivroPorNome(nome);
+                     livro = encontrarLivroPorNome(nome);
                     if (livro != null) {
                         livro.updateProduto();
                     } else {
@@ -55,7 +62,7 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
                     String nomeDeletar = scanner.nextLine();
                     Livro livroDeletar = encontrarLivroPorNome(nomeDeletar);
                     if (livroDeletar != null) {
-                        livroDeletar.deletarProduto();
+                        livroDeletar.deletarProdutoBase();
                     } else {
                         System.out.println("Produto não encontrado.");
                     }
@@ -70,8 +77,8 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
         double valorDesconto = preco * desconto / 100;
         return preco - valorDesconto;
     }
-
-    private static void criarLivro() {
+    @Override
+    public void criarProdutoBase() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("=== Criar Livro ===");
@@ -88,7 +95,7 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
         System.out.println("Qual é o autor?");
         String autor = scanner.nextLine();
 
-        System.out.println("Qual é valor do desconto");
+        System.out.println("Qual é a porcentagem do desconto");
         double desconto = scanner.nextDouble();
 
         System.out.println("Quantos gêneros o livro possui?");
@@ -134,7 +141,7 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
     }
 
     @Override
-    public void deletarProduto() {
+    public void deletarProdutoBase() {
         livros.remove(this);
         System.out.println("Livro deletado: " + getNome());
     }

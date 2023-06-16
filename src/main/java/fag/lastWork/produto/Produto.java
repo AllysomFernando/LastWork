@@ -16,10 +16,13 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
         this.qualidadeEspecial = qualidadeEspecial;
     }
 
+    public Produto() {
+    }
+
     public static void exibirMenu() {
         Scanner scanner = new Scanner(System.in);
         boolean sair = false;
-
+        Produto produto = new Produto();
         while (!sair) {
             System.out.println("=== Menu ===");
             System.out.println("1. Criar Produto");
@@ -33,12 +36,13 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
 
             switch (opcao) {
                 case 1:
-                    criarProduto();
+                    assert produto != null;
+                    produto.criarProdutoBase();
                     break;
                 case 2:
                     System.out.println("Digite o nome do produto a ser atualizado:");
                     String nome = scanner.nextLine();
-                    Produto produto = encontrarProdutoPorNome(nome);
+                    produto = encontrarProdutoPorNome(nome);
                     if (produto != null) {
                         produto.updateProduto();
                     } else {
@@ -53,7 +57,7 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
                     String nomeDeletar = scanner.nextLine();
                     Produto produtoDeletar = encontrarProdutoPorNome(nomeDeletar);
                     if (produtoDeletar != null) {
-                        produtoDeletar.deletarProduto();
+                        produtoDeletar.deletarProdutoBase();
                     } else {
                         System.out.println("Produto não encontrado.");
                     }
@@ -66,39 +70,31 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
         }
     }
     @Override
-    public void deletarProduto() {
+    public void deletarProdutoBase() {
         produtos.remove(this);
         System.out.println("Livro deletado: " + getNome());
     }
-
-    private static void criarProduto() {
+    @Override
+    public void criarProdutoBase() {
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("=== Criar Produto ===");
         System.out.println("Qual é o nome?");
         String nome = scanner.nextLine();
-
         System.out.println("Qual é o preço?");
         double preco = scanner.nextDouble();
-
         System.out.println("Qual é a quantidade?");
         int quantidade = scanner.nextInt();
         scanner.nextLine();
-
         System.out.println("Qual é a qualidade especial?");
         String qualidadeEspecial = scanner.nextLine();
-
-        System.out.println("Qual é valor do desconto");
+        System.out.println("Qual é a porcentagem do desconto");
         double desconto = scanner.nextDouble();
-
         System.out.println("O produto é vendável? 1 - Sim, 2 - Não");
         int isVend = scanner.nextInt();
         scanner.nextLine();
         boolean isVendavel = isVend == 1;
-
         Produto produto = new Produto(nome, preco, quantidade, qualidadeEspecial, isVendavel, desconto);
         produtos.add(produto);
-
         System.out.println("Produto criado com sucesso");
     }
 

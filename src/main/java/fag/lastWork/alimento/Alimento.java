@@ -10,10 +10,15 @@ import java.util.Scanner;
 public class Alimento extends ProdutoBase<Alimento> implements CalculoDesconto{
     private String caloria;
     static List<Alimento> alimentos = new ArrayList<>();
+
+    public Alimento() {
+
+    }
+
     public static void exibirMenu() {
         Scanner scanner = new Scanner(System.in);
         boolean sair = false;
-
+        Alimento alimento = new Alimento();
         while (!sair) {
             System.out.println("=== Menu ===");
             System.out.println("1. Criar Alimento");
@@ -27,11 +32,14 @@ public class Alimento extends ProdutoBase<Alimento> implements CalculoDesconto{
             scanner.nextLine();
 
             switch (opcao) {
-                case 1 -> criarAlimentoPersonalizado();
+                case 1 -> {
+                    assert alimento != null;
+                    alimento.criarProdutoBase();
+                }
                 case 2 -> {
                     System.out.println("Digite o nome do alimento a ser atualizado:");
                     String nome = scanner.nextLine();
-                    Alimento alimento = encontrarAlimentoPorNome(nome);
+                     alimento = encontrarAlimentoPorNome(nome);
                     if (alimento != null) {
                         alimento.updateProduto();
                     } else {
@@ -44,7 +52,7 @@ public class Alimento extends ProdutoBase<Alimento> implements CalculoDesconto{
                     String nomeDeletar = scanner.nextLine();
                     Alimento alimentoDeletar = encontrarAlimentoPorNome(nomeDeletar);
                     if (alimentoDeletar != null) {
-                        alimentoDeletar.deletarProduto();
+                        alimentoDeletar.deletarProdutoBase();
                     } else {
                         System.out.println("Produto não encontrado.");
                     }
@@ -55,12 +63,12 @@ public class Alimento extends ProdutoBase<Alimento> implements CalculoDesconto{
         }
     }
     @Override
-    public void deletarProduto() {
+    public void deletarProdutoBase() {
         alimentos.remove(this);
         System.out.println("Alimento deletado: " + getNome());
     }
-
-        static void criarAlimentoPersonalizado() {
+        @Override
+        public void criarProdutoBase() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("=== Criar Alimento ===");
@@ -77,7 +85,7 @@ public class Alimento extends ProdutoBase<Alimento> implements CalculoDesconto{
         System.out.println("Qual é a caloria do Alimento?");
         String caloria = scanner.nextLine();
 
-        System.out.println("Qual é valor do desconto");
+        System.out.println("Qual é a porcentagem do desconto");
         double desconto = scanner.nextDouble();
 
         System.out.println("O alimento é vendável? 1 - Sim, 2 - Não");

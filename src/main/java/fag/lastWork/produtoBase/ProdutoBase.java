@@ -14,6 +14,9 @@ public abstract class ProdutoBase<T> implements Vendavel  {
 
     public double desconto;
 
+    public ProdutoBase() {
+    }
+
 
     public boolean isVendavel() {
         return isVendavel;
@@ -31,7 +34,11 @@ public abstract class ProdutoBase<T> implements Vendavel  {
         this.isVendavel = isVendavel;
     }
 
-    public abstract void deletarProduto();
+    public abstract void deletarProdutoBase();
+
+
+    public abstract void criarProdutoBase();
+
 
     public void updateProduto() {
         Scanner scanner = new Scanner(System.in);
@@ -47,7 +54,7 @@ public abstract class ProdutoBase<T> implements Vendavel  {
         quantidade = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Qual é valor do desconto");
+        System.out.println("Qual é a porcentagem do desconto");
         desconto = scanner.nextDouble();
 
         System.out.println("Produto atualizado com sucesso!");

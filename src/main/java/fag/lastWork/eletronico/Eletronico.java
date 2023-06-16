@@ -10,10 +10,14 @@ import java.util.Scanner;
 public class Eletronico extends ProdutoBase <Eletronico> {
     static String voltagem;
     static List<Eletronico> eletronicos = new ArrayList<>();
+
+    public Eletronico() {
+    }
+
     public static void exibirMenu() {
         Scanner scanner = new Scanner(System.in);
         boolean sair = false;
-
+        Eletronico eletronico = new Eletronico();
         while (!sair) {
             System.out.println("=== Menu ===");
             System.out.println("1. Criar Eletronico");
@@ -26,11 +30,14 @@ public class Eletronico extends ProdutoBase <Eletronico> {
             scanner.nextLine();
 
             switch (opcao) {
-                case 1 -> criarEletronicoPersonalizado();
+                case 1 -> {
+                    assert eletronico != null;
+                    eletronico.criarProdutoBase();
+                }
                 case 2 -> {
                     System.out.println("Digite o nome do Eletronico a ser atualizado:");
                     String nome = scanner.nextLine();
-                    Eletronico eletronico = encontrarEletronicoPorNome(nome);
+                    eletronico = encontrarEletronicoPorNome(nome);
                     if (eletronico != null) {
                         eletronico.updateProduto();
                     } else {
@@ -43,7 +50,7 @@ public class Eletronico extends ProdutoBase <Eletronico> {
                     String nomeDeletar = scanner.nextLine();
                     Eletronico eletronicoDeletar = encontrarEletronicoPorNome(nomeDeletar);
                     if (eletronicoDeletar != null) {
-                        eletronicoDeletar.deletarProduto();
+                        eletronicoDeletar.deletarProdutoBase();
                     } else {
                         System.out.println("Produto não encontrado.");
                     }
@@ -54,12 +61,12 @@ public class Eletronico extends ProdutoBase <Eletronico> {
         }
     }
     @Override
-    public void deletarProduto() {
+    public void deletarProdutoBase() {
         eletronicos.remove(this);
         System.out.println("Alimento deletado: " + getNome());
     }
-
-    static void criarEletronicoPersonalizado() {
+    @Override
+    public void criarProdutoBase() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("=== Criar Eletrônico ===");
@@ -76,7 +83,7 @@ public class Eletronico extends ProdutoBase <Eletronico> {
         System.out.println("Qual é a voltagem do Eletronico?");
         String voltagem = scanner.nextLine();
 
-        System.out.println("Qual é valor do desconto");
+        System.out.println("Qual é a porcentagem do desconto");
         double desconto = scanner.nextDouble();
 
         System.out.println("O Eletronico é vendável? 1 - Sim, 2 - Não");
