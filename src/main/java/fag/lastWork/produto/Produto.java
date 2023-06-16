@@ -14,6 +14,7 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
     public Produto(String nome, double preco, int quantidade, String qualidadeEspecial, boolean isVendavel, double desconto) {
         super(nome, preco, quantidade, isVendavel, desconto);
         this.qualidadeEspecial = qualidadeEspecial;
+        this.setVendavel(isVendavel);
     }
 
     public Produto() {
@@ -72,7 +73,7 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
     @Override
     public void deletarProdutoBase() {
         produtos.remove(this);
-        System.out.println("Livro deletado: " + getNome());
+        System.out.println("Produto deletado: " + getNome());
     }
     @Override
     public void criarProdutoBase() {

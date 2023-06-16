@@ -25,7 +25,7 @@ public class Alimento extends ProdutoBase<Alimento> implements CalculoDesconto{
             System.out.println("2. Atualizar Alimento");
             System.out.println("3. Listar Alimentos");
             System.out.println("4. Deletar alimentos");
-            System.out.println("4. Sair");
+            System.out.println("5. Sair");
             System.out.println("Escolha uma opção:");
 
             int opcao = scanner.nextInt();
@@ -141,10 +141,10 @@ public class Alimento extends ProdutoBase<Alimento> implements CalculoDesconto{
         return preco - valorDesconto;
     }
 
-    @Override
-    protected Alimento criarInstanciaProduto(String nome, double preco, int quantidade, Boolean isVendavel, double desconto) {
-        return new Alimento(nome, preco, quantidade, caloria, isVendavel, desconto);
-    }
+        @Override
+        protected Alimento criarInstanciaProduto(String nome, double preco, int quantidade, Boolean isVendavel, double desconto) {
+            return new Alimento(nome, preco, quantidade, caloria, isVendavel, desconto);
+        }
 
     public String getCaloria() {
         return caloria;

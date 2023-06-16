@@ -19,6 +19,7 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
         this.autor = autor;
         this.genero = genero;
         this.editora = editora;
+        this.setVendavel(isVendavel);
         this.disponibilidade = disponibilidade;
     }
 

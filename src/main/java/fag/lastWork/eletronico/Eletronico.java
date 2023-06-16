@@ -46,7 +46,7 @@ public class Eletronico extends ProdutoBase <Eletronico> {
                 }
                 case 3 -> listarEletronico();
                 case 4 -> {
-                    System.out.println("Digite o nome do alimento a ser deletado:");
+                    System.out.println("Digite o nome do eletronico a ser deletado:");
                     String nomeDeletar = scanner.nextLine();
                     Eletronico eletronicoDeletar = encontrarEletronicoPorNome(nomeDeletar);
                     if (eletronicoDeletar != null) {
@@ -63,7 +63,7 @@ public class Eletronico extends ProdutoBase <Eletronico> {
     @Override
     public void deletarProdutoBase() {
         eletronicos.remove(this);
-        System.out.println("Alimento deletado: " + getNome());
+        System.out.println("Eletronico deletado: " + getNome());
     }
     @Override
     public void criarProdutoBase() {
