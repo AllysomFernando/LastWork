@@ -67,7 +67,7 @@ public class Eletronico extends ProdutoBase <Eletronico> {
         String nome = scanner.nextLine();
 
         System.out.println("Qual é o preço?");
-        String preco = scanner.nextLine();
+        double preco = scanner.nextDouble();
 
         System.out.println("Qual é a quantidade?");
         int quantidade = scanner.nextInt();
@@ -75,6 +75,9 @@ public class Eletronico extends ProdutoBase <Eletronico> {
 
         System.out.println("Qual é a voltagem do Eletronico?");
         String voltagem = scanner.nextLine();
+
+        System.out.println("Qual é valor do desconto");
+        double desconto = scanner.nextDouble();
 
         System.out.println("O Eletronico é vendável? 1 - Sim, 2 - Não");
         int isVend = scanner.nextInt();
@@ -90,7 +93,7 @@ public class Eletronico extends ProdutoBase <Eletronico> {
             isVendavel = false;
         }
 
-        Eletronico eletronico = new Eletronico(nome, preco, quantidade, voltagem, isVendavel);
+        Eletronico eletronico = new Eletronico(nome, preco, quantidade, voltagem, isVendavel, desconto);
         eletronicos.add(eletronico);
 
         System.out.println("Eletronico criado com sucesso");
@@ -108,21 +111,27 @@ public class Eletronico extends ProdutoBase <Eletronico> {
         for (Eletronico eletronico : eletronicos) {
             System.out.println("Nome: " + eletronico.getNome());
             System.out.println("Preço: " + eletronico.getPreco());
+            System.out.println("Digite a porcentagem de desconto para " + eletronico.getDesconto() + ":");
+            System.out.println("Preço com Desconto: " + eletronico.calcularPrecoComDesconto(eletronico.getPreco(), eletronico.getDesconto() ));
             System.out.println("Quantidade: " + eletronico.getQuantidade());
             System.out.println("Voltagem: " + eletronico.getVoltagem());
             System.out.println("Vendável: " + (eletronico.isVendavel() ? "Sim" : "Não"));
             System.out.println();
         }
     }
-    public Eletronico(String nome, String preco, int quantidade, String voltagem, Boolean isVendavel) {
-        super(nome, preco, quantidade, isVendavel);
+    public double calcularPrecoComDesconto(double preco, double desconto) {
+        double valorDesconto = preco * desconto / 100;
+        return preco - valorDesconto;
+    }
+    public Eletronico(String nome, double preco, int quantidade, String voltagem, Boolean isVendavel, double desconto) {
+        super(nome, preco, quantidade, isVendavel, desconto);
         Eletronico.voltagem = voltagem;
         this.setVendavel(isVendavel);
     }
 
     @Override
-    protected Eletronico criarInstanciaProduto(String nome, String preco, int quantidade, Boolean isVendavel) {
-        return new Eletronico(nome, preco, quantidade, voltagem , isVendavel);
+    protected Eletronico criarInstanciaProduto(String nome, double preco, int quantidade, Boolean isVendavel, double desconto) {
+        return new Eletronico(nome, preco, quantidade, voltagem , isVendavel, desconto);
 
     }
     public String getVoltagem() {

@@ -7,10 +7,12 @@ import java.util.Scanner;
 
 public abstract class ProdutoBase<T> implements Vendavel  {
     public String nome;
-    public String preco;
+    public double preco;
     public int quantidade;
-
     private boolean isVendavel;
+
+
+    public double desconto;
 
 
     public boolean isVendavel() {
@@ -21,10 +23,11 @@ public abstract class ProdutoBase<T> implements Vendavel  {
         isVendavel = vendavel;
     }
 
-    public ProdutoBase(String nome, String preco, int quantidade, Boolean isVendavel) {
+    public ProdutoBase(String nome, double preco, int quantidade, Boolean isVendavel, double desconto) {
         this.nome = nome;
         this.preco = preco;
         this.quantidade = quantidade;
+        this.desconto = desconto;
         this.isVendavel = isVendavel;
     }
 
@@ -38,31 +41,41 @@ public abstract class ProdutoBase<T> implements Vendavel  {
         nome = scanner.nextLine();
 
         System.out.println("Qual é o novo preço do Produto?");
-        preco = scanner.nextLine();
+        preco = scanner.nextDouble();
 
         System.out.println("Qual é a nova quantidade do Produto?");
         quantidade = scanner.nextInt();
         scanner.nextLine();
 
+        System.out.println("Qual é valor do desconto");
+        desconto = scanner.nextDouble();
+
         System.out.println("Produto atualizado com sucesso!");
         System.out.println();
     }
 
-    protected abstract T criarInstanciaProduto(String nome, String preco, int quantidade, Boolean isVendavel);
+    protected abstract T criarInstanciaProduto(String nome, double preco, int quantidade, Boolean isVendavel, double desconto);
 
     public String getNome() {
         return nome;
     }
 
+    public double getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(double desconto) {
+        this.desconto = desconto;
+    }
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public String getPreco() {
+    public double getPreco() {
         return preco;
     }
 
-    public void setPreco(String preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 

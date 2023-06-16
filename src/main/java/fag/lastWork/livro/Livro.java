@@ -14,8 +14,8 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
     private int disponibilidade;
     private static List<Livro> livros = new ArrayList<>();
 
-    public Livro(String nome, String preco, int quantidade, String autor, List<String> genero, List<String> editora, int disponibilidade, boolean isVendavel) {
-        super(nome, preco, quantidade, isVendavel);
+    public Livro(String nome, double preco, int quantidade, String autor, List<String> genero, List<String> editora, int disponibilidade, boolean isVendavel, double desconto) {
+        super(nome, preco, quantidade, isVendavel, desconto);
         this.autor = autor;
         this.genero = genero;
         this.editora = editora;
@@ -38,10 +38,8 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
             scanner.nextLine();
 
             switch (opcao) {
-                case 1:
-                    criarLivro();
-                    break;
-                case 2:
+                case 1 -> criarLivro();
+                case 2 -> {
                     System.out.println("Digite o nome do livro a ser atualizado:");
                     String nome = scanner.nextLine();
                     Livro livro = encontrarLivroPorNome(nome);
@@ -50,11 +48,9 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
                     } else {
                         System.out.println("Livro não encontrado.");
                     }
-                    break;
-                case 3:
-                    listarLivros();
-                    break;
-                case 4:
+                }
+                case 3 -> listarLivros();
+                case 4 -> {
                     System.out.println("Digite o nome do produto a ser deletado:");
                     String nomeDeletar = scanner.nextLine();
                     Livro livroDeletar = encontrarLivroPorNome(nomeDeletar);
@@ -63,13 +59,9 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
                     } else {
                         System.out.println("Produto não encontrado.");
                     }
-                    break;
-                case 5:
-                    sair = true;
-                    break;
-                default:
-                    System.out.println("Opção inválida. Por favor, escolha novamente.");
-                    break;
+                }
+                case 5 -> sair = true;
+                default -> System.out.println("Opção inválida. Por favor, escolha novamente.");
             }
         }
     }
@@ -87,7 +79,7 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
         String nome = scanner.nextLine();
 
         System.out.println("Qual é o preço?");
-        String preco = scanner.nextLine();
+        double preco = scanner.nextDouble();
 
         System.out.println("Qual é a quantidade?");
         int quantidade = scanner.nextInt();
@@ -95,6 +87,9 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
 
         System.out.println("Qual é o autor?");
         String autor = scanner.nextLine();
+
+        System.out.println("Qual é valor do desconto");
+        double desconto = scanner.nextDouble();
 
         System.out.println("Quantos gêneros o livro possui?");
         int numGeneros = scanner.nextInt();
@@ -123,7 +118,7 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
         scanner.nextLine();
         boolean isVendavel = isVend == 1;
 
-        Livro livro = new Livro(nome, preco, quantidade, autor, genero, editora, disponibilidade, isVendavel);
+        Livro livro = new Livro(nome, preco, quantidade, autor, genero, editora, disponibilidade, isVendavel, desconto);
         livros.add(livro);
 
         System.out.println("Livro criado com sucesso");
@@ -150,10 +145,7 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
         for (Livro livro : livros) {
             System.out.println("Nome: " + livro.getNome());
             System.out.println("Preço: " + livro.getPreco());
-            System.out.println("Digite a porcentagem de desconto para " + livro.getNome() + ":");
-            double desconto = scanner.nextDouble();
-
-            double precoComDesconto = livro.calcularPrecoComDesconto(Double.parseDouble(livro.getPreco()), desconto);
+            double precoComDesconto = livro.calcularPrecoComDesconto(livro.getPreco(), livro.getDesconto());
             System.out.println("Preço com Desconto: " + precoComDesconto);
             System.out.println("Quantidade: " + livro.getQuantidade());
             System.out.println("Autor: " + livro.getAutor());
@@ -165,8 +157,8 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
         }
     }
     @Override
-    protected Livro criarInstanciaProduto(String nome, String preco, int quantidade, Boolean isVendavel) {
-        return new Livro(nome, preco, quantidade, autor, genero, editora, disponibilidade, isVendavel);
+    protected Livro criarInstanciaProduto(String nome, double preco, int quantidade, Boolean isVendavel, double desconto) {
+        return new Livro(nome, preco, quantidade, autor, genero, editora, disponibilidade, isVendavel, desconto);
     }
     public String getAutor() {
         return autor;

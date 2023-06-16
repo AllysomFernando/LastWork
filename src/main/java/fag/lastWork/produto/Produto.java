@@ -1,6 +1,5 @@
 package fag.lastWork.produto;
 
-import fag.lastWork.alimento.Alimento;
 import fag.lastWork.desconto.CalculoDesconto;
 import fag.lastWork.produtoBase.ProdutoBase;
 
@@ -12,8 +11,8 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
     private String qualidadeEspecial;
     private static List<Produto> produtos = new ArrayList<>();
 
-    public Produto(String nome, String preco, int quantidade, String qualidadeEspecial, boolean isVendavel) {
-        super(nome, preco, quantidade, isVendavel);
+    public Produto(String nome, double preco, int quantidade, String qualidadeEspecial, boolean isVendavel, double desconto) {
+        super(nome, preco, quantidade, isVendavel, desconto);
         this.qualidadeEspecial = qualidadeEspecial;
     }
 
@@ -80,7 +79,7 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
         String nome = scanner.nextLine();
 
         System.out.println("Qual é o preço?");
-        String preco = scanner.nextLine();
+        double preco = scanner.nextDouble();
 
         System.out.println("Qual é a quantidade?");
         int quantidade = scanner.nextInt();
@@ -89,12 +88,15 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
         System.out.println("Qual é a qualidade especial?");
         String qualidadeEspecial = scanner.nextLine();
 
+        System.out.println("Qual é valor do desconto");
+        double desconto = scanner.nextDouble();
+
         System.out.println("O produto é vendável? 1 - Sim, 2 - Não");
         int isVend = scanner.nextInt();
         scanner.nextLine();
         boolean isVendavel = isVend == 1;
 
-        Produto produto = new Produto(nome, preco, quantidade, qualidadeEspecial, isVendavel);
+        Produto produto = new Produto(nome, preco, quantidade, qualidadeEspecial, isVendavel, desconto);
         produtos.add(produto);
 
         System.out.println("Produto criado com sucesso");
@@ -116,11 +118,7 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
         for (Produto produto : produtos) {
             System.out.println("Nome: " + produto.getNome());
             System.out.println("Preço: " + produto.getPreco());
-
-            System.out.println("Digite a porcentagem de desconto para " + produto.getNome() + ":");
-            double desconto = scanner.nextDouble();
-
-            double precoComDesconto = produto.calcularPrecoComDesconto(Double.parseDouble(produto.getPreco()), desconto);
+            double precoComDesconto = produto.calcularPrecoComDesconto(produto.getPreco(), produto.getDesconto());
             System.out.println("Preço com Desconto: " + precoComDesconto);
             System.out.println("Quantidade: " + produto.getQuantidade());
             System.out.println("Qualidade Especial: " + produto.getQualidadeEspecial());
@@ -143,7 +141,7 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
     }
 
     @Override
-    protected Produto criarInstanciaProduto(String nome, String preco, int quantidade, Boolean isVendavel) {
-        return new Produto(nome, preco, quantidade, qualidadeEspecial, isVendavel);
+    protected Produto criarInstanciaProduto(String nome, double preco, int quantidade, Boolean isVendavel, double desconto) {
+        return new Produto(nome, preco, quantidade, qualidadeEspecial, isVendavel, desconto);
     }
 }
