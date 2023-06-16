@@ -55,6 +55,16 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
                     listarLivros();
                     break;
                 case 4:
+                    System.out.println("Digite o nome do produto a ser deletado:");
+                    String nomeDeletar = scanner.nextLine();
+                    Livro livroDeletar = encontrarLivroPorNome(nomeDeletar);
+                    if (livroDeletar != null) {
+                        livroDeletar.deletarProduto();
+                    } else {
+                        System.out.println("Produto não encontrado.");
+                    }
+                    break;
+                case 5:
                     sair = true;
                     break;
                 default:
@@ -126,6 +136,12 @@ public class Livro extends ProdutoBase<Livro> implements CalculoDesconto {
             }
         }
         return null;
+    }
+
+    @Override
+    public void deletarProduto() {
+        livros.remove(this);
+        System.out.println("Livro deletado: " + getNome());
     }
 
     private static void listarLivros() {

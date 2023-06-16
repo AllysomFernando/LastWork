@@ -1,6 +1,7 @@
 package fag.lastWork.alimento;
 
 import fag.lastWork.desconto.CalculoDesconto;
+import fag.lastWork.livro.Livro;
 import fag.lastWork.produtoBase.ProdutoBase;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Alimento extends ProdutoBase<Alimento> implements CalculoDesconto{
             System.out.println("1. Criar Alimento");
             System.out.println("2. Atualizar Alimento");
             System.out.println("3. Listar Alimentos");
+            System.out.println("4. Deletar alimentos");
             System.out.println("4. Sair");
             System.out.println("Escolha uma opção:");
 
@@ -38,10 +40,25 @@ public class Alimento extends ProdutoBase<Alimento> implements CalculoDesconto{
                     }
                 }
                 case 3 -> listarAlimentos();
-                case 4 -> sair = true;
+                case 4 -> {
+                    System.out.println("Digite o nome do alimento a ser deletado:");
+                    String nomeDeletar = scanner.nextLine();
+                    Alimento alimentoDeletar = encontrarAlimentoPorNome(nomeDeletar);
+                    if (alimentoDeletar != null) {
+                        alimentoDeletar.deletarProduto();
+                    } else {
+                        System.out.println("Produto não encontrado.");
+                    }
+                }
+                case 5 -> sair = true;
                 default -> System.out.println("Opção inválida. Por favor, escolha novamente.");
             }
         }
+    }
+    @Override
+    public void deletarProduto() {
+        alimentos.remove(this);
+        System.out.println("Alimento deletado: " + getNome());
     }
 
         static void criarAlimentoPersonalizado() {

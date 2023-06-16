@@ -28,6 +28,7 @@ public abstract class ProdutoBase<T> implements Vendavel  {
         this.isVendavel = isVendavel;
     }
 
+    public abstract void deletarProduto();
 
     public void updateProduto() {
         Scanner scanner = new Scanner(System.in);

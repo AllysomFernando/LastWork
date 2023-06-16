@@ -1,4 +1,5 @@
 package fag.lastWork.eletronico;
+import fag.lastWork.alimento.Alimento;
 import fag.lastWork.produtoBase.ProdutoBase;
 
 
@@ -37,11 +38,27 @@ public class Eletronico extends ProdutoBase <Eletronico> {
                     }
                 }
                 case 3 -> listarEletronico();
-                case 4 -> sair = true;
+                case 4 -> {
+                    System.out.println("Digite o nome do alimento a ser deletado:");
+                    String nomeDeletar = scanner.nextLine();
+                    Eletronico eletronicoDeletar = encontrarEletronicoPorNome(nomeDeletar);
+                    if (eletronicoDeletar != null) {
+                        eletronicoDeletar.deletarProduto();
+                    } else {
+                        System.out.println("Produto não encontrado.");
+                    }
+                }
+                case 5 -> sair = true;
                 default -> System.out.println("Opção inválida. Por favor, escolha novamente.");
             }
         }
     }
+    @Override
+    public void deletarProduto() {
+        eletronicos.remove(this);
+        System.out.println("Alimento deletado: " + getNome());
+    }
+
     static void criarEletronicoPersonalizado() {
         Scanner scanner = new Scanner(System.in);
 

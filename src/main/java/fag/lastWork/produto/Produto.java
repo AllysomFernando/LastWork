@@ -1,5 +1,6 @@
 package fag.lastWork.produto;
 
+import fag.lastWork.alimento.Alimento;
 import fag.lastWork.desconto.CalculoDesconto;
 import fag.lastWork.produtoBase.ProdutoBase;
 
@@ -48,14 +49,27 @@ public class Produto extends ProdutoBase<Produto> implements CalculoDesconto {
                 case 3:
                     listarProdutos();
                     break;
-                case 4:
-                    sair = true;
-                    break;
+                case 4 :
+                    System.out.println("Digite o nome do produto a ser deletado:");
+                    String nomeDeletar = scanner.nextLine();
+                    Produto produtoDeletar = encontrarProdutoPorNome(nomeDeletar);
+                    if (produtoDeletar != null) {
+                        produtoDeletar.deletarProduto();
+                    } else {
+                        System.out.println("Produto não encontrado.");
+                    }
+
+                case 5: sair = true;
                 default:
                     System.out.println("Opção inválida. Por favor, escolha novamente.");
                     break;
             }
         }
+    }
+    @Override
+    public void deletarProduto() {
+        produtos.remove(this);
+        System.out.println("Livro deletado: " + getNome());
     }
 
     private static void criarProduto() {
